@@ -25,39 +25,38 @@ class FleetUp:
     @checks.spam_check()
     @checks.is_whitelist()
     async def _fleets(self, ctx):
-        if ctx.message.channel.id in self.config.fleetUp['blacklisted_channels']:
-            return # silently fail because OPSEC 
-        data = await self.request_data(self.config)
-        if data is not None:
-            upcoming = False
-            embed = make_embed(title='Upcoming Fleets', title_url='https://fleet-up.com/')
-            embed.set_footer(icon_url=self.bot.user.avatar_url,
-                             text="Provided Via Firetail Bot & Fleet-Up")
-            embed.set_thumbnail(url="https://fleet-up.com/Content/Images/logo_title.png")
-            for operation in data:
-                current_eve = int(datetime.now(pytz.timezone('UTC')).timestamp())
-                fleet_time = int(re.findall(r'\d+', operation['Start'])[0][:-3])
-                seconds_from_now = fleet_time - current_eve
-                if seconds_from_now > 0:
-                    upcoming = True
-                    doctrine = 'N/A'
-                    horizontal_rule = ''
-                    if len(data) > 1:
-                        horizontal_rule = '\n\n-------'
-                    if len(operation['Doctrines']) > 0:
-                        doctrine = operation['Doctrines']
-                    embed.add_field(name="Fleet Information", value='Fleet Name: {}\nFleet Time: {} EVE\n'
-                                                                    'Planned Doctrines: {}\nForm-Up Location: {} {}\n'
-                                                                    'Organizer: {}\n\nDetails: {}{}'.
-                                    format(operation['Subject'], operation['StartString'], doctrine,
-                                           operation['Location'], operation['LocationInfo'], operation['Organizer'],
-                                           operation['Details'], horizontal_rule),
-                                    inline=False)
-            if upcoming:
-                dest = ctx.author if ctx.bot.config.dm_only else ctx
-                await dest.send(embed=embed)
-                if ctx.bot.config.delete_commands:
-                    await ctx.message.delete()
+        if ctx.message.channel.id not in self.config.fleetUp['blacklisted_channels']: #opsec yay
+            data = await self.request_data(self.config)
+            if data is not None:
+                upcoming = False
+                embed = make_embed(title='Upcoming Fleets', title_url='https://fleet-up.com/')
+                embed.set_footer(icon_url=self.bot.user.avatar_url,
+                                 text="Provided Via Firetail Bot & Fleet-Up")
+                embed.set_thumbnail(url="https://fleet-up.com/Content/Images/logo_title.png")
+                for operation in data:
+                    current_eve = int(datetime.now(pytz.timezone('UTC')).timestamp())
+                    fleet_time = int(re.findall(r'\d+', operation['Start'])[0][:-3])
+                    seconds_from_now = fleet_time - current_eve
+                    if seconds_from_now > 0:
+                        upcoming = True
+                        doctrine = 'N/A'
+                        horizontal_rule = ''
+                        if len(data) > 1:
+                            horizontal_rule = '\n\n-------'
+                        if len(operation['Doctrines']) > 0:
+                            doctrine = operation['Doctrines']
+                        embed.add_field(name="Fleet Information", value='Fleet Name: {}\nFleet Time: {} EVE\n'
+                                                                        'Planned Doctrines: {}\nForm-Up Location: {} {}\n'
+                                                                        'Organizer: {}\n\nDetails: {}{}'.
+                                        format(operation['Subject'], operation['StartString'], doctrine,
+                                               operation['Location'], operation['LocationInfo'], operation['Organizer'],
+                                               operation['Details'], horizontal_rule),
+                                        inline=False)
+                if upcoming:
+                    dest = ctx.author if ctx.bot.config.dm_only else ctx
+                    await dest.send(embed=embed)
+                    if ctx.bot.config.delete_commands:
+                        await ctx.message.delete()
 
     async def tick_loop(self):
         await self.bot.wait_until_ready()
