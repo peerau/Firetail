@@ -121,7 +121,7 @@ class FleetUp:
         await dest.send(embed=embed)
 
     async def request_data(self, config):
-        base_url = "http://api.fleet-up.com/Api.svc/{}}/".format(config.fleetUp['bot_apikey'])
+        base_url = "http://api.fleet-up.com/Api.svc/{}/".format(config.fleetUp['bot_apikey'])
         full_url = "{}{}/{}/Operations/{}".format(base_url, config.fleetUp['user_id'], config.fleetUp['api_code'],
                                                   config.fleetUp['group_id'])
         async with self.bot.session.get(full_url) as resp:
