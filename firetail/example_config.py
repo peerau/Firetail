@@ -73,7 +73,8 @@ fleetUp = {  # add or remove groups as needed, groups must have unique names.
     'user_id': 12345,  # User ID from your fleet-up USER api-key [https://fleet-up.com/Api/MyKeys]
     'api_code': '',  # API Code from your fleet-up USER api-key
     'auto_posting': True,  # Change to False if you don't want the bot to automatically post new and upcoming fleets
-    'channel_id': 12345,  # Channel to post fleet-up operations
+    'announce_channel': 12345,  # Channel ID to post fleet-up operations
+    'blacklisted_channels': [], # Channel IDs the !fleet command cannot be used in, Ignored if empty
 }
 
 # RSS Extension Settings

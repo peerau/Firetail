@@ -25,6 +25,8 @@ class FleetUp:
     @checks.spam_check()
     @checks.is_whitelist()
     async def _fleets(self, ctx):
+        if ctx.message.channel.id in self.config.fleetUp['blacklisted_channels']:
+            return # silently fail because OPSEC 
         data = await self.request_data(self.config)
         if data is not None:
             upcoming = False
@@ -115,7 +117,7 @@ class FleetUp:
                         format(operation['Subject'], operation['StartString'], doctrine,
                                operation['Location'], operation['LocationInfo'], operation['Organizer'],
                                operation['Details']))
-        dest = self.bot.get_channel(int(self.config.fleetUp['channel_id']))
+        dest = self.bot.get_channel(int(self.config.fleetUp['announce_channel']))
         await dest.send(embed=embed)
 
     async def request_data(self, config):

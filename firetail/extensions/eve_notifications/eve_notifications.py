@@ -73,7 +73,7 @@ class Notifications:
                         format(operation['Subject'], operation['StartString'], doctrine,
                                operation['Location'], operation['LocationInfo'], operation['Organizer'],
                                operation['Details']))
-        dest = self.bot.get_channel(int(self.config.fleetUp['channel_id']))
+        dest = self.bot.get_channel(int(self.config.fleetUp['announce_channel']))
         await dest.send(embed=embed)
 
     async def request_data(self, config):
