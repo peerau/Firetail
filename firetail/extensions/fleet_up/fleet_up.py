@@ -25,7 +25,7 @@ class FleetUp:
     @checks.spam_check()
     @checks.is_whitelist()
     async def _fleets(self, ctx):
-        if ctx.message.channel.id not in self.config.fleetUp['blacklisted_channels']: #opsec yay
+        if (ctx.message.channel.id not in self.config.fleetUp['blacklisted_channels']) and (ctx.guild is not None): #opsec yay
             data = await self.request_data(self.config)
             if data is not None:
                 upcoming = False
