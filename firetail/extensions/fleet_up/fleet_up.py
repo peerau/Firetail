@@ -39,12 +39,14 @@ class FleetUp:
                     seconds_from_now = fleet_time - current_eve
                     if seconds_from_now > 0:
                         upcoming = True
-                        doctrine = 'N/A'
+                        doctrine = 'N/A\n'
                         horizontal_rule = ''
                         if len(data) > 1:
                             horizontal_rule = '\n\n-------'
                         if len(operation['Doctrines']) > 0:
-                            doctrine = operation['Doctrines']
+                            doctrine = '\n'
+                            for fit in operation['Doctrines']:
+                                doctrine += '[{}](https://fleet-up.com/Doctrine/Item/{})\n'.format(fit['Name'], fit['Id'])
                         embed.add_field(name="Fleet Information", value='Fleet Name: {}\nFleet Time: {} EVE\n'
                                                                         'Planned Doctrines: {}\nForm-Up Location: {} {}\n'
                                                                         'Organizer: {}\n\nDetails: {}{}'.
@@ -104,9 +106,11 @@ class FleetUp:
             title = 'New Fleet Posted'
         else:
             title = 'Fleet Starting In Less Than 30 Minutes'
-        doctrine = 'N/A'
+        doctrine = 'N/A\n'
         if len(operation['Doctrines']) > 0:
-            doctrine = operation['Doctrines']
+            doctrine = '\n'
+            for fit in operation['Doctrines']:
+                doctrine += '[{}](https://fleet-up.com/Doctrine/Item/{})\n'.format(fit['Name'], fit['Id'])
         embed = make_embed(title=title, title_url='https://fleet-up.com/Operation#{}'.format(operation['Id']))
         embed.set_footer(icon_url=self.bot.user.avatar_url,
                          text="Provided Via Firetail Bot & Fleet-Up")
