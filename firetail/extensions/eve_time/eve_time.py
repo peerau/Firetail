@@ -16,13 +16,14 @@ class EveTime:
 
     TIMEZONES = {
         'EVE Time': 'UTC',
-        'PST/California': 'America/Los_Angeles',
-        'EST/New York': 'America/New_York',
-        'CET/Copenhagen': 'Europe/Copenhagen',
-        'MSK/Moscow': 'Europe/Moscow',
-        'AEST/Sydney': 'Australia/Sydney',
+        'SA': 'Australia/Adelaide',
+        'VIC': 'Australia/Melbourne',
+        'NSW': 'Australia/Sydney',
+        'QLD': 'Australia/Brisbane',
+        'WA': 'Australia/Perth',
+        'TAS': 'Australia/Hobart',
+        'Salem, MA': 'America/New_York',
     }
-
     @commands.command(name='time')
     @checks.spam_check()
     @checks.is_whitelist()
