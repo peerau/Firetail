@@ -23,7 +23,9 @@ class EveTime:
         'WA': 'Australia/Perth',
         'TAS': 'Australia/Hobart',
         'Salem, MA': 'America/New_York',
+        'Portland, OR': 'America/Los_Angeles',
     }
+    
     @commands.command(name='time')
     @checks.spam_check()
     @checks.is_whitelist()
