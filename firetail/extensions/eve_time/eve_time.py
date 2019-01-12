@@ -33,8 +33,9 @@ class EveTime:
         tz_field = []
         time_field = []
         for display, zone in self.TIMEZONES.items():
-            tz_field.append("**{}**".format(display))
-            time_field.append(datetime.now(pytz.timezone(zone)).strftime('%a %b %d %H:%M'))
+            tz_field.append("**{}**".format(display))\
+            eve_year = "YC" + str(datetime.now(pytz.timezone("Australia/Adelaide")).year - 1898)
+            time_field.append("`" + datetime.now(pytz.timezone(zone)).strftime('%a %b %d %H:%M ') + eve_year + "`")
 
         embed = make_embed(guild=ctx.guild)
         embed.set_footer(icon_url=ctx.bot.user.avatar_url,
