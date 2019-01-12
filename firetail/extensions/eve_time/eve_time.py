@@ -34,7 +34,7 @@ class EveTime:
         time_field = []
         for display, zone in self.TIMEZONES.items():
             tz_field.append("**{}**".format(display))
-            time_field.append(datetime.now(pytz.timezone(zone)).strftime('%H:%M'))
+            time_field.append(datetime.now(pytz.timezone(zone)).strftime('%a %b %d %H:%M'))
 
         embed = make_embed(guild=ctx.guild)
         embed.set_footer(icon_url=ctx.bot.user.avatar_url,
