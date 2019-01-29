@@ -90,14 +90,14 @@ class FleetUp:
             current_eve = int(datetime.now(pytz.timezone('UTC')).timestamp())
             fleet_time = int(re.findall(r'\d+', operation['Start'])[0][:-3])
             seconds_from_now = fleet_time - current_eve
-            if 1800 > seconds_from_now > 0 and operation['Id'] not in self.soon_operations:
+            if 3600 > seconds_from_now > 0 and operation['Id'] not in self.soon_operations:
                 self.soon_operations.append(operation['Id'])
                 await self.post_operation(operation, False)
                 continue
-            if 300 > seconds_from_now > 0 and operation['Id'] not in self.very_soon_operations:
-                self.very_soon_operations.append(operation['Id'])
-                await self.post_operation(operation, True)
-                continue
+            #if 300 > seconds_from_now > 0 and operation['Id'] not in self.very_soon_operations:
+            #    self.very_soon_operations.append(operation['Id'])
+            #    await self.post_operation(operation, True)
+            #    continue
 
     async def post_operation(self, operation, very_soon):
         if very_soon:
@@ -105,7 +105,7 @@ class FleetUp:
         elif very_soon is None:
             title = 'New Fleet Posted'
         else:
-            title = 'Fleet Starting In Less Than 30 Minutes'
+            title = 'Fleet Starting In Less Than an Hour'
         doctrine = 'N/A\n'
         if len(operation['Doctrines']) > 0:
             doctrine = '\n'
