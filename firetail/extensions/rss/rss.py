@@ -1,5 +1,4 @@
 from firetail.lib import db
-from firetail.utils import make_embed
 import asyncio
 import feedparser
 import discord
